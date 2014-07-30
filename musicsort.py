@@ -29,7 +29,8 @@ def cleanSort():
 			sort(songArtist, songAlbum, i)
 		except KeyError:
 			print('Problem with tags on: {0}, consider retagging and try again'.format(os.path.split(i)[1]))
-			
+	
+	print('Cleaning up...')		
 	emptySweep(musicroot)
 	print('Done sorting!')
 		
@@ -62,7 +63,6 @@ def sort(artist, album, directory):
 		
 
 def emptySweep(location):
-	print('Cleaning up...')
 	items = os.listdir(location)
 	if items == []:
 		return True
