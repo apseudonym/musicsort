@@ -1,5 +1,6 @@
 import os
-from mutagen.id3 import ID3
+from mutagen.easyid3 import EasyID3
+from mutagen.flac import FLAC
 
 musicroot = os.path.join(os.path.expanduser('~'), 'Music')
 
@@ -12,16 +13,19 @@ def cleanSort():
 	os.chdir(musicroot)
 
 	getFolders(musicroot)
-
+				
 	for i in albums:
 		path = os.path.join(musicroot, i)
 		print(i)
 		songs = findSongs(path)
 		song = songs[0]
-		songInfo = ID3(song)
+		if '.mp3' in song:
+			songInfo = EasyID3(song)
+		if '.flac' in song:
+			songInfo = FLAC(song)
 		try:
-			songArtist = songInfo['TPE1'].text[0]
-			songAlbum = songInfo['TALB'].text[0]
+			songArtist = songInfo['artist'][0]
+			songAlbum = songInfo['album'][0]
 			sort(songArtist, songAlbum, i)
 		except KeyError:
 			print('Problem with tags on: {0}, consider retagging and try again'.format(os.path.split(i)[1]))
@@ -32,7 +36,7 @@ def cleanSort():
 def findSongs(location):
 	songs = []
 	for i in os.listdir(location):
-		if '.mp3' in i:
+		if '.mp3' in i or '.flac' in i:
 			songs.append(os.path.join(location, i))
 	return songs
 
@@ -75,7 +79,7 @@ def getFolders(location):
 	directories = []
 	containsMusic = False
 	for i in os.listdir(location):
-		if '.mp3' in i:
+		if '.mp3' in i or '.flac' in i:
 			return location
 		if os.path.isdir(os.path.join(location, i)):
 			directories.append(os.path.join(location, i))
