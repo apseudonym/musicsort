@@ -24,18 +24,12 @@ def cleanSort():
 			songArtist = songInfo['artist'][0]
 			songAlbum = songInfo['album'][0]
 		except KeyError:
-<<<<<<< HEAD
 			songInfo = tagMusic(i, songs)
 			songArtist = songInfo['artist']
 			songAlbum = songInfo['album']
 		sort(songArtist, songAlbum, i)
 
 	print('Cleaning up...')	
-=======
-			print('Problem with tags on: {0}, consider retagging and try again'.format(os.path.split(i)[1]))
-	
-	print('Cleaning up...')		
->>>>>>> 6053b57b538bea21dd70ec4cbec29805fc5c0a24
 	emptySweep(musicroot)
 	print('Done sorting!')
 
